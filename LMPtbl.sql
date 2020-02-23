@@ -81,9 +81,46 @@ ALTER TABLE [dbo]. Settlement CHECK CONSTRAINT FK_Time_ID;
 
 
 
+create TABLE dbo.SetPoint_TypeCombo  ( ComboID INTEGER NOT NULL IDENTITY,
+								[SettlementID] INTEGER not null,
+								IntervalID INTEGER  NOT NULL,
+								SettlementPointTypeCombo VARCHAR (70) NOT NULL
+								CONSTRAINT PK_SetID PRIMARY KEY clustered (ComboID));
+
+GO
 
 
-select * from RTDIndicativeLMP
+ALTER TABLE  dbo.SetPoint_TypeCombo   WITH CHECK ADD  CONSTRAINT FK_SPTCombo_SettlementID FOREIGN KEY (SettlementID)
+REFERENCES  dbo.Settlement (SettlementID)
+
+
+ALTER TABLE dbo.SetPoint_TypeCombo CHECK CONSTRAINT FK_SPTCombo_SettlementID;
+
+GO
+
+--- some constrain test--
+
+
+ SELECT name, is_disabled, is_not_trusted
+  FROM   sys.foreign_keys
+  WHERE  name = 'FK_Settlement_IntervalID '
+
+
+
+ delete from [dbo].[Sheet1$] 
+  DELETe FROM DBO.SetPoint_TypeCombo
+  DELETe FROM dbo.Settlement
+  delete from dbo.SettlementPoint
+  delete from dbo.SettlementPointType
+  delete from dbo. RTDInterval
+  delete  from [dbo].[RTDIndicativeLMP]
+
+select* from[dbo].[RTDInterval]
+select * From [dbo].[SettlementPointType]
+select * From [dbo].[SettlementPoint]
+select * from dbo.[Settlement]
+SELECT * FROM dbo.SetPoint_TypeCombo 
+select* from [dbo].[Sheet1$]
 
 
  
